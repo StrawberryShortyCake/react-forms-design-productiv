@@ -11,14 +11,23 @@ import EditableTodo from "./EditableTodo.jsx";
  */
 
 function EditableTodoList({ todos, remove, update }) {
-  return (
-    <div>
-      {/*   FIXME  */}
-      <EditableTodo todo={todos[0]} remove={remove} update={update} />
-      <EditableTodo todo={todos[1]} remove={remove} update={update} />
-      <EditableTodo todo={todos[2]} remove={remove} update={update} />
-    </div>
-  );
+  function renderTodos() {
+    return (
+      <ul>
+        {todos.map((todo) => (
+          <li>
+            {" "}
+            <EditableTodo
+              todo={todo}
+              update={update}
+              remove={remove}
+            />
+          </li>
+        ))}
+      </ul>
+    );
+  }
+  return <div>{renderTodos()}</div>;
 }
 
 export default EditableTodoList;
