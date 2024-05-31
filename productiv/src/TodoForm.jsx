@@ -34,6 +34,7 @@ function TodoForm({
   function handleSubmit(evt) {
     evt.preventDefault();
     if (!handleCreate) {
+      //HACK: better way to do this???
       handleSave(formData);
       toggleEdit();
     } else {
