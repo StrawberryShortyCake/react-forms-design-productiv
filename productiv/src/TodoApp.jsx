@@ -15,7 +15,7 @@ import TopTodo from "./TopTodo.jsx";
  * App -> TodoApp -> { TodoForm, EditableTodoList }
  */
 
-function TodoApp({ initialTodos }) {
+function TodoApp({ initialTodos = [] }) {
   const [todos, setTodos] = useState(initialTodos);
 
   /** add a new todo to list */
@@ -73,7 +73,7 @@ function TodoApp({ initialTodos }) {
 
           <section>
             <h3 className="mb-3">Add Nü</h3>
-            <TodoForm handleCreate={create} />
+            <TodoForm submit={create} />
           </section>
         </div>
       </div>

@@ -3,6 +3,8 @@
  * Props:
  * - todo: like { id, title, description, priority }
  *
+ * State: none
+ *
  * { EditableTodo, TopTodo } -> Todo
  **/
 

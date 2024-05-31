@@ -1,25 +1,25 @@
 import { useState } from "react";
 
+const emptyState = {
+  id: "",
+  title: "",
+  description: "",
+  priority: 1,
+};
+
 /** Form for adding.
  *
  * Props:
  * - initialFormData
  * - handleSave: function to call in parent.
  *
+ * State: formData
+ *
  * { TodoApp, EditableTodo } -> TodoForm
  */
 
-function TodoForm({
-  id = "",
-  title = "",
-  description = "",
-  priority = "",
-  handleSave,
-  toggleEdit,
-  handleCreate,
-}) {
-  const initialState = { id, title, description, priority };
-  const [formData, setFormData] = useState(initialState);
+function TodoForm({ todo = emptyState, submit }) {
+  const [formData, setFormData] = useState(todo);
 
   /** Update form input. */
   function handleChange(evt) {
@@ -33,23 +33,16 @@ function TodoForm({
   /** Call parent function and clear form. */
   function handleSubmit(evt) {
     evt.preventDefault();
-    if (!handleCreate) {
-      //HACK: better way to do this???
-      handleSave(formData);
-      toggleEdit();
-    } else {
-      handleCreate(formData);
-      setFormData(initialState);
-    }
 
-    console.log("handle submit", formData);
+    formData.priority === undefined ? 1 : Number(formData.priority);
+
+    submit(formData);
+
+    setFormData(emptyState);
   }
 
   return (
-    <form
-      className="TodoForm"
-      onSubmit={handleSubmit}
-    >
+    <form className="TodoForm" onSubmit={handleSubmit}>
       <div className="mb-3">
         <input
           name="title"
@@ -74,10 +67,7 @@ function TodoForm({
 
       <div className="mb-3">
         <div className="w-75 d-flex justify-content-between">
-          <label
-            htmlFor="TodoForm-priority"
-            className="d-inline-flex"
-          >
+          <label htmlFor="TodoForm-priority" className="d-inline-flex">
             Priority:&nbsp;&nbsp;
           </label>
           <select

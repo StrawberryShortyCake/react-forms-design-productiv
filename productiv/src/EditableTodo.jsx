@@ -5,9 +5,11 @@ import TodoForm from "./TodoForm.jsx";
 /** Show editable todo item.
  *
  * Props
- * - todo
+ * - a todo item object
  * - update(): fn to call to update a todo
  * - remove(): fn to call to remove a todo
+ *
+ * State: isEdit
  *
  * EditableTodoList -> EditableTodo -> { Todo, TodoForm }
  */
@@ -17,11 +19,7 @@ function EditableTodo({ todo, update, remove }) {
 
   /** Toggle if this is being edited */
   function toggleEdit() {
-    if (isEdit === true) {
-      setIsEdit(false);
-    } else if (isEdit === false) {
-      setIsEdit(true);
-    }
+    setIsEdit((n) => !n);
   }
 
   /** Call remove fn passed to this. */
@@ -32,19 +30,13 @@ function EditableTodo({ todo, update, remove }) {
   /** Edit form saved; toggle isEditing and update in ancestor. */
   function handleSave(formData) {
     update(formData);
+    toggleEdit();
   }
 
   return (
     <div className="EditableTodo">
       {isEdit ? (
-        <TodoForm
-          id={todo.id}
-          title={todo.title}
-          description={todo.description}
-          priority={todo.priority}
-          handleSave={handleSave}
-          toggleEdit={toggleEdit}
-        />
+        <TodoForm todo={todo} submit={handleSave} />
       ) : (
         <div className="mb-3">
           <div className="float-end text-sm-end">
