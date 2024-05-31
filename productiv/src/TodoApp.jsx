@@ -45,23 +45,29 @@ function TodoApp({ initialTodos }) {
   return (
     <main className="TodoApp">
       <div className="row">
-        <div className="col-md-6">
-          <h3 className="mb-3">Todos</h3>
-          <EditableTodoList
-            todos={todos}
-            remove={remove}
-            update={update}
-          />{" "}
-          OR
+        {todos.length !== 0 ? (
+          <div className="col-md-6">
+            <h3 className="mb-3">Todos</h3>
+            <EditableTodoList
+              todos={todos}
+              remove={remove}
+              update={update}
+            />{" "}
+          </div>
+        ) : (
           <span className="text-muted">You have no todos.</span>
-        </div>
+        )}
 
         <div className="col-md-6">
-          (if no top todo, omit this whole section)
-          <section className="mb-4">
-            <h3>Top Todo</h3>
-            <TopTodo />
-          </section>
+          {todos.length !== 0 ? (
+            <section className="mb-4">
+              <h3>Top Todo</h3>
+              <TopTodo todos={todos} />
+            </section>
+          ) : (
+            ""
+          )}
+
           <section>
             <h3 className="mb-3">Add Nü</h3>
             <TodoForm handleCreate={create} />
