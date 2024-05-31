@@ -16,6 +16,7 @@ function TodoForm({
   priority = "",
   handleSave,
   toggleEdit,
+  handleCreate,
 }) {
   const initialState = { id, title, description, priority };
   const [formData, setFormData] = useState(initialState);
@@ -32,13 +33,21 @@ function TodoForm({
   /** Call parent function and clear form. */
   function handleSubmit(evt) {
     evt.preventDefault();
-    handleSave(formData);
-    toggleEdit();
+    if (!handleCreate) {
+      handleSave(formData);
+      toggleEdit();
+    } else {
+      handleCreate(formData);
+    }
+
     console.log("handle submit", formData);
   }
 
   return (
-    <form className="TodoForm" onSubmit={handleSubmit}>
+    <form
+      className="TodoForm"
+      onSubmit={handleSubmit}
+    >
       <div className="mb-3">
         <input
           name="title"
@@ -63,7 +72,10 @@ function TodoForm({
 
       <div className="mb-3">
         <div className="w-75 d-flex justify-content-between">
-          <label htmlFor="TodoForm-priority" className="d-inline-flex">
+          <label
+            htmlFor="TodoForm-priority"
+            className="d-inline-flex"
+          >
             Priority:&nbsp;&nbsp;
           </label>
           <select
