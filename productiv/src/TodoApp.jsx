@@ -4,6 +4,8 @@ import TodoForm from "./TodoForm.jsx";
 import EditableTodoList from "./EditableTodoList.jsx";
 import TopTodo from "./TopTodo.jsx";
 
+let CURRENT_ID = 4;
+
 /** App for managing a todo list.
  *
  * Props:
@@ -19,7 +21,12 @@ function TodoApp({ initialTodos }) {
   const [todos, setTodos] = useState(initialTodos);
 
   /** add a new todo to list */
-  function create(newTodo) {}
+  function create(newTodo) {
+    let newTodoWithId = { ...newTodo, id: uuid() };
+    setTodos((todos) => {
+      return [...todos, newTodoWithId];
+    });
+  }
 
   /** update a todo with updatedTodo */
   function update(updatedTodo) {
@@ -40,7 +47,12 @@ function TodoApp({ initialTodos }) {
       <div className="row">
         <div className="col-md-6">
           <h3 className="mb-3">Todos</h3>
-          <EditableTodoList todos={todos} remove={remove} update={update} /> OR
+          <EditableTodoList
+            todos={todos}
+            remove={remove}
+            update={update}
+          />{" "}
+          OR
           <span className="text-muted">You have no todos.</span>
         </div>
 
@@ -52,7 +64,7 @@ function TodoApp({ initialTodos }) {
           </section>
           <section>
             <h3 className="mb-3">Add Nü</h3>
-            FIXME
+            <TodoForm handleCreate={create} />
           </section>
         </div>
       </div>
