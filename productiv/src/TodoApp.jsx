@@ -16,11 +16,21 @@ import TopTodo from "./TopTodo.jsx";
  */
 
 function TodoApp({ initialTodos }) {
+  const [todos, setTodos] = useState(initialTodos);
+
   /** add a new todo to list */
   function create(newTodo) {}
 
   /** update a todo with updatedTodo */
-  function update(updatedTodo) {}
+  function update(updatedTodo) {
+    // {id: 6, title: 'Code!', description: 'Write some code', priority: 2}
+    setTodos((todos) => {
+      const newTodos = todos.map((todo) => {
+        return todo.id === updatedTodo.id ? updatedTodo : todo;
+      });
+      return newTodos;
+    });
+  }
 
   /** delete a todo by id */
   function remove(id) {}
@@ -30,12 +40,7 @@ function TodoApp({ initialTodos }) {
       <div className="row">
         <div className="col-md-6">
           <h3 className="mb-3">Todos</h3>
-          <EditableTodoList
-            todos={initialTodos}
-            remove={remove}
-            update={update}
-          />{" "}
-          OR
+          <EditableTodoList todos={todos} remove={remove} update={update} /> OR
           <span className="text-muted">You have no todos.</span>
         </div>
 

@@ -13,9 +13,15 @@ import TodoForm from "./TodoForm.jsx";
  */
 
 function EditableTodo({ todo, update, remove }) {
+  const [isEdit, setIsEdit] = useState(false);
+
   /** Toggle if this is being edited */
   function toggleEdit() {
-    setIsEdit(true);
+    if (isEdit === true) {
+      setIsEdit(false);
+    } else if (isEdit === false) {
+      setIsEdit(true);
+    }
   }
 
   /** Call remove fn passed to this. */
@@ -28,12 +34,17 @@ function EditableTodo({ todo, update, remove }) {
     update(formData);
   }
 
-  const [isEdit, setIsEdit] = useState(false);
-
   return (
     <div className="EditableTodo">
       {isEdit ? (
-        <TodoForm handleSave={handleSave} />
+        <TodoForm
+          id={todo.id}
+          title={todo.title}
+          description={todo.description}
+          priority={todo.priority}
+          handleSave={handleSave}
+          toggleEdit={toggleEdit}
+        />
       ) : (
         <div className="mb-3">
           <div className="float-end text-sm-end">
