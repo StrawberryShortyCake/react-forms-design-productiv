@@ -39,6 +39,7 @@ function TodoForm({
       toggleEdit();
     } else {
       handleCreate(formData);
+      setFormData(initialState);
     }
 
     console.log("handle submit", formData);
