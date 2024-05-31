@@ -4,8 +4,6 @@ import TodoForm from "./TodoForm.jsx";
 import EditableTodoList from "./EditableTodoList.jsx";
 import TopTodo from "./TopTodo.jsx";
 
-let CURRENT_ID = 4;
-
 /** App for managing a todo list.
  *
  * Props:
@@ -40,7 +38,12 @@ function TodoApp({ initialTodos }) {
   }
 
   /** delete a todo by id */
-  function remove(id) {}
+  function remove(id) {
+    console.log("remove fn reached", id);
+    setTodos((todos) => {
+      return todos.filter((todo) => todo.id !== id);
+    });
+  }
 
   return (
     <main className="TodoApp">
